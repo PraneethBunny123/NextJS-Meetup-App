@@ -1,5 +1,7 @@
-export default function() {
+import MeetupDetail from "../../components/meetups/MeetupDetail"
+
+export default function MeetupDetails() {
     return (
-        <div>Hello</div>
+        <MeetupDetail />
     )
 }
