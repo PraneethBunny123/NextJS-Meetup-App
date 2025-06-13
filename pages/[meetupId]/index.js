@@ -1,3 +1,4 @@
+import { MongoClient } from "mongodb"
 import MeetupDetail from "../../components/meetups/MeetupDetail"
 
 export default function MeetupDetails() {
@@ -12,6 +13,15 @@ export default function MeetupDetails() {
 }
 
 export async function getStaticPaths() {
+    const client = await MongoClient.connect('mongodb+srv://bunny:bunny@cluster0.xp1gj.mongodb.net/meetups?retryWrites=true&w=majority&appName=Cluster0')
+    const db = client.db()
+
+    const meetupsCollection = db.collection('meetups')
+
+    const meetupIDs = await meetupsCollection.find({}, {_id: 1}).toArray()
+
+    client.close()
+
     return {
         fallback: false,
         paths: [
