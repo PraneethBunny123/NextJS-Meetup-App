@@ -48,7 +48,12 @@ export async function getStaticProps() {
 
     return {
         props: {
-            meetups: meetupsFromDB
+            meetups: meetupsFromDB.map(meetup => ({
+                title: meetup.title,
+                address: meetup.address,
+                image: meetup.image,
+                id: meetup._id.toString()
+            }))
         },
         revalidate: 1
     }
