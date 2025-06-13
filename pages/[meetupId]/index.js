@@ -34,7 +34,14 @@ export async function getStaticProps(context) {
     //Fetching data for a single prop
 
     const meetupId = context.params.meetupId
-    console.log(meetupId);
+    const client = await MongoClient.connect('mongodb+srv://bunny:bunny@cluster0.xp1gj.mongodb.net/meetups?retryWrites=true&w=majority&appName=Cluster0')
+    const db = client.db()
+
+    const meetupsCollection = db.collection('meetups')
+
+    const selectedMeetup = await meetupsCollection.findOne({_id: meetupId}).toArray()
+
+    client.close()
     
 
     return {
