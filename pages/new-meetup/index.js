@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useRouter } from "next/router";
 import NewMeetupForm from "../../components/meetups/NewMeetupForm";
 
@@ -23,7 +24,10 @@ export default function NewMeetupPage() {
 
     return (
         <>
-            <div>new meetup</div>
+            <Head>
+                <title>Add New Meetuo</title>
+                <meta name="description" content="Add your amazing Meetups to our React Meetups" />
+            </Head>
             <NewMeetupForm onAddMeetup={onAddMeetup} />
         </>
     )
