@@ -6,8 +6,8 @@ export default function MeetupDetails(props) {
     return (
         <>
             <Head>
-                <title>Meetup Detail</title>
-                <meta name="description" content="Browse the details of the Meetup spot!" />
+                <title>{props.meetupData.title}</title>
+                <meta name="description" content={props.meetupData.description} />
             </Head>
             <MeetupDetail 
                 image={props.meetupData.image}
