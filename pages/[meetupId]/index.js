@@ -2,6 +2,12 @@ import Head from "next/head"
 import { MongoClient, ObjectId } from "mongodb"
 import MeetupDetail from "../../components/meetups/MeetupDetail"
 
+    const username = process.env.MONGODB_USERNAME
+    const password = process.env.MONGODB_PASSWORD
+    const cluster = process.env.MONGODB_CLUSTER
+    const dbName = process.env.MONGODB_DB
+    const collectionName = process.env.MONGODB_COLLECTION
+
 export default function MeetupDetails(props) {
     return (
         <>
@@ -20,10 +26,13 @@ export default function MeetupDetails(props) {
 }
 
 export async function getStaticPaths() {
-    const client = await MongoClient.connect('mongodb+srv://bunny:bunny@cluster0.xp1gj.mongodb.net/meetups?retryWrites=true&w=majority&appName=Cluster0')
+
+    const uri = `mongodb+srv://${username}:${password}@${cluster}.mongodb.net/${dbName}?retryWrites=true&w=majority`
+
+    const client = await MongoClient.connect(uri)
     const db = client.db()
 
-    const meetupsCollection = db.collection('meetups')
+    const meetupsCollection = db.collection(collectionName)
 
     const meetupIDs = await meetupsCollection.find({}, {_id: 1}).toArray()
 
@@ -41,10 +50,13 @@ export async function getStaticProps(context) {
     //Fetching data for a single prop
 
     const meetupId = context.params.meetupId
-    const client = await MongoClient.connect('mongodb+srv://bunny:bunny@cluster0.xp1gj.mongodb.net/meetups?retryWrites=true&w=majority&appName=Cluster0')
+
+    const uri = `mongodb+srv://${username}:${password}@${cluster}.mongodb.net/${dbName}?retryWrites=true&w=majority`
+
+    const client = await MongoClient.connect(uri)
     const db = client.db()
 
-    const meetupsCollection = db.collection('meetups')
+    const meetupsCollection = db.collection(collectionName)
 
     const selectedMeetup = await meetupsCollection.findOne({_id:new ObjectId(meetupId)})
 
